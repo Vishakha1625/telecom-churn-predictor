@@ -28,6 +28,43 @@ import streamlit as st
 from sklearn.preprocessing import LabelEncoder
 
 warnings.filterwarnings("ignore")
+#----------------------------------------------
+# ── FORCE DARK TABLE THEME (STREAMLIT CLOUD FIX) ──
+st.markdown("""
+<style>
+
+/* dataframe container */
+[data-testid="stDataFrame"] {
+    background-color: #0f172a;
+    border-radius: 10px;
+}
+
+/* table header */
+[data-testid="stDataFrame"] thead tr th {
+    background-color: #111827 !important;
+    color: #e5e7eb !important;
+    font-weight: 600;
+}
+
+/* table cells */
+[data-testid="stDataFrame"] tbody tr td {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+}
+
+/* row hover */
+[data-testid="stDataFrame"] tbody tr:hover td {
+    background-color: #1f2937 !important;
+}
+
+/* expander dataframe fix */
+[data-testid="stExpander"] [data-testid="stDataFrame"] {
+    background-color: #0f172a;
+}
+
+</style>
+""", unsafe_allow_html=True)
+#----------------------------------------------
 
 # ─────────────────────────────────────────────
 # PAGE CONFIG
