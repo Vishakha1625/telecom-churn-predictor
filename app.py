@@ -5328,7 +5328,7 @@ TEAL   = "#14B8A6"
 
 # ─────────────────────────────────────────────
 #  CSS
-# s ─────────────────────────────────────────────
+#  ─────────────────────────────────────────────
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -5337,9 +5337,9 @@ html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'
 #MainMenu,footer,header,[data-testid="stToolbar"]{{display:none!important;}}
 .block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
 
-# [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
-# [data-testid="stSidebar"]>div:first-child{{padding-top:0!important;}}
-# [data-testid="stSidebarNav"]{{display:none!important;}}
+/* [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
+[data-testid="stSidebar"]>div:first-child{{padding-top:0!important;}}
+[data-testid="stSidebarNav"]{{display:none!important;}} */
 
 /* Sidebar Toggle Buttons */
 [data-testid="stSidebarCollapseButton"] {{display: flex !important; visibility: visible !important; opacity: 1 !important;}}
@@ -5380,6 +5380,46 @@ hr{{border-color:{BDR}!important;margin:1.4rem 0!important;}}
 .pdot{{display:inline-block;width:7px;height:7px;border-radius:50%;background:{GREEN};animation:pdot 2s infinite;box-shadow:0 0 6px {GREEN};margin-right:6px;vertical-align:middle;}}
 @keyframes sup{{from{{opacity:0;transform:translateY(14px);}}to{{opacity:1;transform:translateY(0);}}}}
 .sup{{animation:sup .4s cubic-bezier(.22,1,.36,1) both;}}
+
+/* ── CRITICAL FIX: FORCE SIDEBAR EXPAND BUTTON VISIBILITY ── */
+[data-testid="collapsedControl"],
+[data-testid="stSidebarCollapsedControl"],
+div.st-emotion-cache-1cbv39x {{
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: #161B27 !important;
+    border: 1px solid #2A3347 !important;
+    border-radius: 0 8px 8px 0 !important;
+    padding: 5px !important;
+    position: fixed !important;
+    top: 15px !important;
+    left: 0 !important;
+    z-index: 999999 !important;
+}}
+
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapsedControl"] svg,
+div.st-emotion-cache-1cbv39x svg {{
+    fill: #E8EDF5 !important;
+    color: #E8EDF5 !important;
+    display: block !important;
+    visibility: visible !important;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    opacity: 1 !important;
+}}
+
+[data-testid="collapsedControl"] button,
+[data-testid="stSidebarCollapsedControl"] button,
+div.st-emotion-cache-1cbv39x button {{
+    background: transparent !important;
+    border: none !important;
+    color: #E8EDF5 !important;
+    display: block !important;
+    visibility: visible !important;
+}}
+
 </style>
 """, unsafe_allow_html=True)
 
