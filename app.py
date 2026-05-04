@@ -5257,46 +5257,9 @@ import streamlit as st
 from sklearn.preprocessing import LabelEncoder
 
 warnings.filterwarnings("ignore")
-#----------------------------------------------
-# ── FORCE DARK TABLE THEME (STREAMLIT CLOUD FIX) ──
-st.markdown("""
-<style>
-
-/* dataframe container */
-[data-testid="stDataFrame"] {
-    background-color: #0f172a;
-    border-radius: 10px;
-}
-
-/* table header */
-[data-testid="stDataFrame"] thead tr th {
-    background-color: #111827 !important;
-    color: #e5e7eb !important;
-    font-weight: 600;
-}
-
-/* table cells */
-[data-testid="stDataFrame"] tbody tr td {
-    background-color: #0f172a !important;
-    color: #e5e7eb !important;
-}
-
-/* row hover */
-[data-testid="stDataFrame"] tbody tr:hover td {
-    background-color: #1f2937 !important;
-}
-
-/* expander dataframe fix */
-[data-testid="stExpander"] [data-testid="stDataFrame"] {
-    background-color: #0f172a;
-}
-
-</style>
-""", unsafe_allow_html=True)
-#----------------------------------------------
 
 # ─────────────────────────────────────────────
-# PAGE CONFIG
+# PAGE CONFIG — must be the VERY FIRST st. call
 # ─────────────────────────────────────────────
 st.set_page_config(
     page_title="TeleChurn AI",
@@ -5304,6 +5267,130 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+#----------------------------------------------
+# ── DARK TABLE + SIDEBAR TOGGLE + EDGE FIX ──
+st.markdown("""
+<style>
+/* Force dark color-scheme — fixes Edge white-on-white */
+:root { color-scheme: dark !important; }
+*, *::before, *::after { color-scheme: dark !important; }
+
+/* Dataframe/table — Chrome + Edge + Streamlit Cloud */
+[data-testid="stDataFrame"],
+[data-testid="stDataFrame"] > div,
+[data-testid="stDataFrame"] > div > div {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-radius: 10px !important;
+    border: 1px solid #2A3347 !important;
+    color-scheme: dark !important;
+}
+[data-testid="stDataFrame"] thead tr th,
+table thead tr th, thead th {
+    background-color: #111827 !important;
+    color: #e5e7eb !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid #2A3347 !important;
+}
+[data-testid="stDataFrame"] tbody tr td,
+table tbody tr td, tbody td {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-bottom: 1px solid #1f2937 !important;
+}
+[data-testid="stDataFrame"] tbody tr:nth-child(even) td,
+table tbody tr:nth-child(even) td {
+    background-color: #131c31 !important;
+}
+[data-testid="stDataFrame"] tbody tr:hover td,
+table tbody tr:hover td { background-color: #1f2937 !important; }
+table { background-color: #0f172a !important; color: #e5e7eb !important;
+        border-collapse: collapse !important; color-scheme: dark !important; }
+[data-testid="stExpander"] [data-testid="stDataFrame"] {
+    background-color: #0f172a !important;
+}
+
+/* Number input — all Streamlit Cloud selectors */
+[data-testid="stNumberInput"] input,
+[data-testid="stNumberInput"] > div > div > input,
+input[type="number"] {
+    background-color: #1C2333 !important;
+    border: 1px solid #2A3347 !important;
+    border-radius: 8px !important;
+    color: #E8EDF5 !important;
+    caret-color: #E8EDF5 !important;
+    -webkit-text-fill-color: #E8EDF5 !important;
+}
+[data-testid="stNumberInput"] button,
+button[aria-label="Increment"],
+button[aria-label="Decrement"] {
+    background-color: #2A3347 !important;
+    border: 1px solid #374357 !important;
+    color: #E8EDF5 !important;
+}
+
+/* Text input — Edge needs -webkit-text-fill-color */
+[data-testid="stTextInput"] input, input[type="text"] {
+    background-color: #1C2333 !important;
+    border: 1px solid #2A3347 !important;
+    border-radius: 8px !important;
+    color: #E8EDF5 !important;
+    -webkit-text-fill-color: #E8EDF5 !important;
+}
+
+/* Sidebar toggle >>> (collapsed) and <<< (expanded) — make SVG visible */
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: #161B27 !important;
+    border: 1px solid #2A3347 !important;
+    border-radius: 0 8px 8px 0 !important;
+    z-index: 999999 !important;
+}
+[data-testid="stSidebarCollapsedControl"] svg,
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapsedControl"] button svg,
+[data-testid="collapsedControl"] button svg {
+    fill: #E8EDF5 !important;
+    color: #E8EDF5 !important;
+    opacity: 1 !important;
+    display: block !important;
+    visibility: visible !important;
+    width: 1.1rem !important;
+    height: 1.1rem !important;
+}
+[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="collapsedControl"] button {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: transparent !important;
+    border: none !important;
+    color: #E8EDF5 !important;
+}
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapseButton"] button {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: transparent !important;
+}
+[data-testid="stSidebarCollapseButton"] svg,
+[data-testid="stSidebarCollapseButton"] button svg {
+    fill: #E8EDF5 !important;
+    color: #E8EDF5 !important;
+    opacity: 1 !important;
+    display: block !important;
+    visibility: visible !important;
+    width: 1.1rem !important;
+    height: 1.1rem !important;
+}
+</style>
+""", unsafe_allow_html=True)
+#----------------------------------------------
 
 # ─────────────────────────────────────────────
 # COLOR SYSTEM
@@ -5327,28 +5414,20 @@ PURPLE = "#A855F7"
 TEAL   = "#14B8A6"
 
 # ─────────────────────────────────────────────
-#  CSS
-#  ─────────────────────────────────────────────
+# CSS
+# ─────────────────────────────────────────────
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-*,*::before,*::after{{box-sizing:border-box;}}
+*,*::before,*::after{{box-sizing:border-box;margin:0;}}
 html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
 #MainMenu,footer,[data-testid="stToolbar"]{{display:none!important;}}
+[data-testid="stHeader"]{{background:transparent!important;height:auto!important;}}
 .block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
 
-/* [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
+[data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
 [data-testid="stSidebar"]>div:first-child{{padding-top:0!important;}}
-[data-testid="stSidebarNav"]{{display:none!important;}} */
-
-/* Sidebar Toggle Buttons */
-[data-testid="stSidebarCollapseButton"] {{display: flex !important; visibility: visible !important; opacity: 1 !important;}}
-[data-testid="stSidebarCollapseButton"] button {{background: transparent !important; border: none !important; color: {TEXT} !important;}}
-[data-testid="stSidebarCollapseButton"] svg {{fill: {TEXT} !important; color: {TEXT} !important; opacity: 1 !important; display: block !important; visibility: visible !important; width: 1.2rem !important; height: 1.2rem !important;}}
-
-[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"] {{display: flex !important; visibility: visible !important; opacity: 1 !important; background: {CARD} !important; border: 1px solid {BDR} !important; border-radius: 0 8px 8px 0 !important; z-index: 999999 !important;}}
-[data-testid="stSidebarCollapsedControl"] button, [data-testid="collapsedControl"] button {{background: transparent !important; border: none !important; color: {TEXT} !important; display: flex !important; visibility: visible !important; opacity: 1 !important;}}
-[data-testid="stSidebarCollapsedControl"] svg, [data-testid="collapsedControl"] svg {{fill: {TEXT} !important; color: {TEXT} !important; opacity: 1 !important; display: block !important; visibility: visible !important; width: 1.2rem !important; height: 1.2rem !important;}}
+[data-testid="stSidebarNav"]{{display:none!important;}}
 
 .stTabs [data-baseweb="tab-list"]{{background:{CARD};border:1px solid {BDR};border-radius:12px;padding:4px;gap:2px;margin-bottom:24px;}}
 .stTabs [data-baseweb="tab"]{{background:transparent!important;color:{MUTED}!important;border-radius:9px!important;padding:9px 24px!important;font-family:'Space Grotesk',sans-serif!important;font-size:.84rem!important;font-weight:600!important;border:none!important;transition:all .18s!important;}}
@@ -5380,49 +5459,8 @@ hr{{border-color:{BDR}!important;margin:1.4rem 0!important;}}
 .pdot{{display:inline-block;width:7px;height:7px;border-radius:50%;background:{GREEN};animation:pdot 2s infinite;box-shadow:0 0 6px {GREEN};margin-right:6px;vertical-align:middle;}}
 @keyframes sup{{from{{opacity:0;transform:translateY(14px);}}to{{opacity:1;transform:translateY(0);}}}}
 .sup{{animation:sup .4s cubic-bezier(.22,1,.36,1) both;}}
-
-/* ── CRITICAL FIX: FORCE SIDEBAR EXPAND BUTTON VISIBILITY ── */
-[data-testid="collapsedControl"],
-[data-testid="stSidebarCollapsedControl"],
-div.st-emotion-cache-1cbv39x {{
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    background-color: #161B27 !important;
-    border: 1px solid #2A3347 !important;
-    border-radius: 0 8px 8px 0 !important;
-    padding: 5px !important;
-    position: fixed !important;
-    top: 15px !important;
-    left: 0 !important;
-    z-index: 999999 !important;
-}}
-
-[data-testid="collapsedControl"] svg,
-[data-testid="stSidebarCollapsedControl"] svg,
-div.st-emotion-cache-1cbv39x svg {{
-    fill: #E8EDF5 !important;
-    color: #E8EDF5 !important;
-    display: block !important;
-    visibility: visible !important;
-    width: 1.5rem !important;
-    height: 1.5rem !important;
-    opacity: 1 !important;
-}}
-
-[data-testid="collapsedControl"] button,
-[data-testid="stSidebarCollapsedControl"] button,
-div.st-emotion-cache-1cbv39x button {{
-    background: transparent !important;
-    border: none !important;
-    color: #E8EDF5 !important;
-    display: block !important;
-    visibility: visible !important;
-}}
-
 </style>
 """, unsafe_allow_html=True)
-
 
 
 # ─────────────────────────────────────────────
