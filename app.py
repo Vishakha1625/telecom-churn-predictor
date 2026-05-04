@@ -5512,6 +5512,28 @@ st.set_page_config(
 
 # </style>
 # """, unsafe_allow_html=True)
+#--------===-----============================
+# --- Minimal dark fix (does NOT change layout) ---
+st.markdown("""
+<style>
+
+/* Fix dataframe text color only */
+[data-testid="stDataFrame"] table {
+    color: #E8EDF5 !important;
+}
+
+/* Fix header text */
+[data-testid="stDataFrame"] thead th {
+    color: #E8EDF5 !important;
+}
+
+/* Fix widget +/- buttons */
+button[kind="secondary"] {
+    color: white !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 #----------------------------------------------
 
 # ─────────────────────────────────────────────
