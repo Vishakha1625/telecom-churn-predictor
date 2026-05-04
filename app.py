@@ -5332,9 +5332,9 @@ TEAL   = "#14B8A6"
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-*,*::before,*::after{{box-sizing:border-box;margin:0;}}
+*,*::before,*::after{{box-sizing:border-box;}}
 html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
-#MainMenu,footer,header,[data-testid="stToolbar"]{{display:none!important;}}
+#MainMenu,footer,[data-testid="stToolbar"]{{display:none!important;}}
 .block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
 
 /* [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
