@@ -5257,9 +5257,46 @@ import streamlit as st
 from sklearn.preprocessing import LabelEncoder
 
 warnings.filterwarnings("ignore")
+#----------------------------------------------
+# ── FORCE DARK TABLE THEME (STREAMLIT CLOUD FIX) ──
+st.markdown("""
+<style>
+
+/* dataframe container */
+[data-testid="stDataFrame"] {
+    background-color: #0f172a;
+    border-radius: 10px;
+}
+
+/* table header */
+[data-testid="stDataFrame"] thead tr th {
+    background-color: #111827 !important;
+    color: #e5e7eb !important;
+    font-weight: 600;
+}
+
+/* table cells */
+[data-testid="stDataFrame"] tbody tr td {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+}
+
+/* row hover */
+[data-testid="stDataFrame"] tbody tr:hover td {
+    background-color: #1f2937 !important;
+}
+
+/* expander dataframe fix */
+[data-testid="stExpander"] [data-testid="stDataFrame"] {
+    background-color: #0f172a;
+}
+
+</style>
+""", unsafe_allow_html=True)
+#----------------------------------------------
 
 # ─────────────────────────────────────────────
-# PAGE CONFIG — must be the very first Streamlit call
+# PAGE CONFIG
 # ─────────────────────────────────────────────
 st.set_page_config(
     page_title="TeleChurn AI",
@@ -5267,262 +5304,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-#----------------------------------------------
-# ── CROSS-BROWSER DARK THEME FIX (Chrome + Edge + Streamlit Cloud) ──
-# st.markdown("""
-# <style>
-
-# /* ══ 1. FORCE DARK COLOR-SCHEME — fixes Edge white-on-white bug ══ */
-# :root {
-#     color-scheme: dark !important;
-#     -ms-color-scheme: dark !important;
-# }
-# *, *::before, *::after {
-#     color-scheme: dark !important;
-# }
-
-# /* ══ 2. PAGE BACKGROUND — all browsers ══ */
-# html, body, .stApp,
-# [data-testid="stAppViewContainer"],
-# [data-testid="stAppViewBlockContainer"],
-# [data-testid="stVerticalBlock"],
-# [data-testid="stMainBlockContainer"],
-# section.main, .main {
-#     background-color: #0F1117 !important;
-#     color: #E8EDF5 !important;
-# }
-
-# /* ══ 3. DATAFRAME / TABLE — Chrome + Edge compatible ══ */
-# [data-testid="stDataFrame"],
-# [data-testid="stDataFrame"] > div,
-# [data-testid="stDataFrame"] > div > div,
-# .stDataFrame {
-#     background-color: #0f172a !important;
-#     color: #E8EDF5 !important;
-#     border-radius: 10px !important;
-#     border: 1px solid #2A3347 !important;
-#     color-scheme: dark !important;
-# }
-# /* thead */
-# [data-testid="stDataFrame"] thead tr,
-# [data-testid="stDataFrame"] thead tr th,
-# table thead tr th,
-# thead th {
-#     background-color: #111827 !important;
-#     color: #e5e7eb !important;
-#     font-weight: 600 !important;
-#     border-bottom: 1px solid #2A3347 !important;
-#     -ms-background-color: #111827 !important;
-# }
-# /* tbody */
-# [data-testid="stDataFrame"] tbody tr,
-# [data-testid="stDataFrame"] tbody tr td,
-# table tbody tr td,
-# tbody td {
-#     background-color: #0f172a !important;
-#     color: #e5e7eb !important;
-#     border-bottom: 1px solid #1f2937 !important;
-#     -ms-background-color: #0f172a !important;
-# }
-# [data-testid="stDataFrame"] tbody tr:nth-child(even) td,
-# table tbody tr:nth-child(even) td {
-#     background-color: #131c31 !important;
-# }
-# [data-testid="stDataFrame"] tbody tr:hover td,
-# table tbody tr:hover td {
-#     background-color: #1f2937 !important;
-# }
-# /* Generic table element fallback */
-# table {
-#     background-color: #0f172a !important;
-#     color: #e5e7eb !important;
-#     border-collapse: collapse !important;
-#     color-scheme: dark !important;
-# }
-# /* Glide data editor (newer Streamlit canvas table) */
-# [data-testid="stDataFrame"] [class*="dvn-scroller"],
-# [data-testid="stDataFrame"] [class*="cell"],
-# [data-testid="stDataFrame"] [class*="header"] {
-#     background-color: #0f172a !important;
-#     color: #e5e7eb !important;
-# }
-# [data-testid="stExpander"] [data-testid="stDataFrame"] {
-#     background-color: #0f172a !important;
-# }
-
-# /* ══ 4. NUMBER INPUT — all browsers ══ */
-# [data-testid="stNumberInput"] input,
-# [data-testid="stNumberInput"] > div > div > input,
-# input[type="number"],
-# input[type="number"]::-webkit-inner-spin-button,
-# input[type="number"]::-webkit-outer-spin-button {
-#     background-color: #1C2333 !important;
-#     border: 1px solid #2A3347 !important;
-#     border-radius: 8px !important;
-#     color: #E8EDF5 !important;
-#     font-size: .88rem !important;
-#     caret-color: #E8EDF5 !important;
-#     -webkit-text-fill-color: #E8EDF5 !important;
-# }
-# input[type="number"]:focus {
-#     border-color: #4F8EF7 !important;
-#     outline: none !important;
-#     box-shadow: 0 0 0 2px rgba(79,142,247,0.25) !important;
-# }
-# /* Stepper +/- buttons */
-# [data-testid="stNumberInput"] button,
-# [data-testid="stNumberInput"] button svg,
-# button[aria-label="Increment"],
-# button[aria-label="Decrement"],
-# button[data-testid="stNumberInputStepUp"],
-# button[data-testid="stNumberInputStepDown"] {
-#     background-color: #2A3347 !important;
-#     border: 1px solid #374357 !important;
-#     border-radius: 6px !important;
-#     color: #E8EDF5 !important;
-#     fill: #E8EDF5 !important;
-# }
-
-# /* ══ 5. TEXT INPUT ══ */
-# [data-testid="stTextInput"] input,
-# input[type="text"] {
-#     background-color: #1C2333 !important;
-#     border: 1px solid #2A3347 !important;
-#     border-radius: 8px !important;
-#     color: #E8EDF5 !important;
-#     -webkit-text-fill-color: #E8EDF5 !important;
-# }
-
-# /* ══ 6. SELECTBOX ══ */
-# div[data-baseweb="select"] > div,
-# div[data-baseweb="select"] > div:focus-within {
-#     background-color: #1C2333 !important;
-#     border: 1px solid #2A3347 !important;
-#     border-radius: 8px !important;
-# }
-# div[data-baseweb="select"] span,
-# div[data-baseweb="select"] div,
-# div[data-baseweb="select"] p { color: #E8EDF5 !important; }
-# div[data-baseweb="popover"],
-# div[data-baseweb="popover"] > div {
-#     background-color: #1C2333 !important;
-#     border: 1px solid #374357 !important;
-#     border-radius: 10px !important;
-# }
-# div[data-baseweb="popover"] li,
-# div[data-baseweb="popover"] [role="option"] {
-#     background-color: #1C2333 !important;
-#     color: #E8EDF5 !important;
-# }
-# div[data-baseweb="popover"] li:hover,
-# div[data-baseweb="popover"] [role="option"]:hover {
-#     background-color: #2A3347 !important;
-# }
-
-# /* ══ 7. WIDGET LABELS ══ */
-# label, [data-testid="stWidgetLabel"],
-# [data-testid="stWidgetLabel"] p,
-# .stSelectbox label, .stNumberInput label,
-# .stTextInput label, .stSlider label {
-#     color: #8B97B0 !important;
-#     -webkit-text-fill-color: #8B97B0 !important;
-# }
-
-# /* ══ 8. SIDEBAR BACKGROUND ══ */
-# [data-testid="stSidebar"],
-# [data-testid="stSidebar"] > div,
-# [data-testid="stSidebar"] section {
-#     background-color: #161B27 !important;
-#     border-right: 1px solid #2A3347 !important;
-# }
-
-# /* ══ 9. SIDEBAR TOGGLE BUTTONS — both <<< and >>> ══ */
-# /* The collapse (<<<) button inside an open sidebar */
-# [data-testid="stSidebarCollapseButton"],
-# [data-testid="stSidebarCollapseButton"] button {
-#     display:      flex !important;
-#     visibility:   visible !important;
-#     opacity:      1 !important;
-#     background-color: transparent !important;
-# }
-# [data-testid="stSidebarCollapseButton"] svg,
-# [data-testid="stSidebarCollapseButton"] button svg {
-#     fill:    #E8EDF5 !important;
-#     color:   #E8EDF5 !important;
-#     opacity: 1 !important;
-#     display: block !important;
-# }
-# /* The expand (>>>) button when sidebar is collapsed */
-# [data-testid="stSidebarCollapsedControl"],
-# [data-testid="collapsedControl"] {
-#     display:      flex !important;
-#     visibility:   visible !important;
-#     opacity:      1 !important;
-#     background-color: #161B27 !important;
-#     border: 1px solid #2A3347 !important;
-#     border-radius: 0 8px 8px 0 !important;
-#     padding: 8px 4px !important;
-#     z-index: 999999 !important;
-# }
-# [data-testid="stSidebarCollapsedControl"] svg,
-# [data-testid="collapsedControl"] svg,
-# [data-testid="stSidebarCollapsedControl"] button svg,
-# [data-testid="collapsedControl"] button svg {
-#     fill:    #E8EDF5 !important;
-#     color:   #E8EDF5 !important;
-#     opacity: 1 !important;
-#     display: block !important;
-#     visibility: visible !important;
-# }
-# [data-testid="stSidebarCollapsedControl"] button,
-# [data-testid="collapsedControl"] button {
-#     display:          flex !important;
-#     visibility:       visible !important;
-#     opacity:          1 !important;
-#     background-color: transparent !important;
-#     border:           none !important;
-#     color:            #E8EDF5 !important;
-# }
-
-# /* ══ 10. EXPANDER ══ */
-# [data-testid="stExpander"] {
-#     background-color: #161B27 !important;
-#     border: 1px solid #2A3347 !important;
-#     border-radius: 10px !important;
-# }
-# details summary, details summary p {
-#     color: #E8EDF5 !important;
-#     -webkit-text-fill-color: #E8EDF5 !important;
-# }
-
-# /* ══ 11. ALERTS ══ */
-# [data-testid="stSuccess"] p,
-# [data-testid="stError"] p,
-# [data-testid="stWarning"] p,
-# [data-testid="stInfo"] p {
-#     color: #E8EDF5 !important;
-#     -webkit-text-fill-color: #E8EDF5 !important;
-# }
-
-# /* ══ 12. GENERAL TEXT — prevent Edge from using its own colors ══ */
-# p, span, div, h1, h2, h3, h4, h5, h6, li, td, th {
-#     -webkit-text-fill-color: inherit;
-# }
-
-# </style>
-# """, unsafe_allow_html=True)
-#--------===-----============================
-# --- Minimal dark fix (does NOT change layout) ---
-# --- Minimal dark fix (does NOT change layout) ---
-st.markdown("""
-<style>
-[data-testid="stDataFrame"] table { color: #E8EDF5 !important; }
-[data-testid="stDataFrame"] thead th { color: #E8EDF5 !important; }
-button[kind="secondary"] { color: white !important; }
-</style>
-""", unsafe_allow_html=True)
-#----------------------------------------------
 
 # ─────────────────────────────────────────────
 # COLOR SYSTEM
@@ -5548,84 +5329,12 @@ TEAL   = "#14B8A6"
 # ─────────────────────────────────────────────
 # CSS
 # ─────────────────────────────────────────────
-# st.markdown(f"""
-# <style>
-# @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-# *,*::before,*::after{{box-sizing:border-box;margin:0;}}
-# html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
-# #MainMenu,footer,[data-testid="stToolbar"],[data-testid="stDecoration"],[data-testid="stStatusWidget"]{{display:none!important;}}
-# [data-testid="stHeader"]{{background:transparent!important;height:auto!important;}}
-
-# /* ── Sidebar collapse/expand toggle — visible in all browsers ── */
-# [data-testid="stSidebarCollapseButton"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
-# [data-testid="stSidebarCollapseButton"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;}}
-# [data-testid="stSidebarCollapseButton"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
-# [data-testid="stSidebarCollapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;background:{CARD}!important;border:1px solid {BDR}!important;border-radius:0 8px 8px 0!important;z-index:999999!important;}}
-# [data-testid="stSidebarCollapsedControl"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;display:flex!important;visibility:visible!important;opacity:1!important;}}
-# [data-testid="stSidebarCollapsedControl"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
-# [data-testid="collapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;background:{CARD}!important;border:1px solid {BDR}!important;border-radius:0 8px 8px 0!important;z-index:999999!important;}}
-# [data-testid="collapsedControl"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;display:flex!important;visibility:visible!important;opacity:1!important;}}
-# [data-testid="collapsedControl"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
-# .block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
-
-# [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
-# [data-testid="stSidebar"]>div:first-child{{padding-top:0!important;}}
-# [data-testid="stSidebarNav"]{{display:none!important;}}
-
-# .stTabs [data-baseweb="tab-list"]{{background:{CARD};border:1px solid {BDR};border-radius:12px;padding:4px;gap:2px;margin-bottom:24px;}}
-# .stTabs [data-baseweb="tab"]{{background:transparent!important;color:{MUTED}!important;border-radius:9px!important;padding:9px 24px!important;font-family:'Space Grotesk',sans-serif!important;font-size:.84rem!important;font-weight:600!important;border:none!important;transition:all .18s!important;}}
-# .stTabs [aria-selected="true"]{{background:{BLUE}!important;color:#fff!important;box-shadow:0 2px 12px {BLUE}30!important;}}
-
-# div[data-baseweb="select"]>div{{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;color:{TEXT}!important;}}
-# div[data-baseweb="select"] *{{color:{TEXT}!important;}}
-# div[data-baseweb="popover"]{{background:{CARD2}!important;border:1px solid {BDR2}!important;border-radius:10px!important;}}
-# div[data-baseweb="popover"] li:hover{{background:{BDR}!important;}}
-# .stNumberInput input,.stTextInput input,.stTextArea textarea{{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;color:{TEXT}!important;font-size:.88rem!important;}}
-# .stSlider>div>div>div>div{{background:{BLUE}!important;}}
-
-# div.stButton>button{{background:{BLUE}!important;color:#fff!important;border:none!important;border-radius:10px!important;padding:14px 0!important;font-family:'Space Grotesk',sans-serif!important;font-weight:700!important;font-size:1rem!important;width:100%!important;letter-spacing:.3px!important;box-shadow:0 4px 20px {BLUE}40!important;transition:all .2s ease!important;}}
-# div.stButton>button:hover{{background:#6BA3F9!important;box-shadow:0 8px 30px {BLUE}55!important;transform:translateY(-1px)!important;}}
-
-# [data-testid="stSuccess"]{{background:#0A1F14!important;border:1px solid {GREEN}40!important;border-radius:10px!important;}}
-# [data-testid="stError"]{{background:#1F0A11!important;border:1px solid {RED}40!important;border-radius:10px!important;}}
-# [data-testid="stWarning"]{{background:#1A1305!important;border:1px solid {AMBER}40!important;border-radius:10px!important;}}
-# [data-testid="stInfo"]{{background:#080F1F!important;border:1px solid {BLUE}40!important;border-radius:10px!important;}}
-# [data-testid="stExpander"]{{background:{CARD}!important;border:1px solid {BDR}!important;border-radius:10px!important;}}
-# details summary{{color:{TEXT}!important;}}
-
-# ::-webkit-scrollbar{{width:4px;height:4px;}}
-# ::-webkit-scrollbar-track{{background:{BG};}}
-# ::-webkit-scrollbar-thumb{{background:{BDR2};border-radius:4px;}}
-# hr{{border-color:{BDR}!important;margin:1.4rem 0!important;}}
-
-# @keyframes pdot{{0%,100%{{opacity:1;}}50%{{opacity:.2;}}}}
-# .pdot{{display:inline-block;width:7px;height:7px;border-radius:50%;background:{GREEN};animation:pdot 2s infinite;box-shadow:0 0 6px {GREEN};margin-right:6px;vertical-align:middle;}}
-# @keyframes sup{{from{{opacity:0;transform:translateY(14px);}}to{{opacity:1;transform:translateY(0);}}}}
-# .sup{{animation:sup .4s cubic-bezier(.22,1,.36,1) both;}}
-# </style>
-# """, unsafe_allow_html=True)
-#==================================================
-# ─────────────────────────────────────────────
-# CSS
-# ─────────────────────────────────────────────
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 *,*::before,*::after{{box-sizing:border-box;margin:0;}}
 html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
-#MainMenu,footer,[data-testid="stToolbar"],[data-testid="stDecoration"],[data-testid="stStatusWidget"]{{display:none!important;}}
-[data-testid="stHeader"]{{background:transparent!important;height:auto!important;}}
-
-/* ── Sidebar collapse/expand toggle ── */
-[data-testid="stSidebarCollapseButton"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
-[data-testid="stSidebarCollapseButton"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;}}
-[data-testid="stSidebarCollapseButton"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
-[data-testid="stSidebarCollapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;background:{CARD}!important;border:1px solid {BDR}!important;border-radius:0 8px 8px 0!important;z-index:999999!important;}}
-[data-testid="stSidebarCollapsedControl"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;display:flex!important;visibility:visible!important;opacity:1!important;}}
-[data-testid="stSidebarCollapsedControl"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
-[data-testid="collapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;background:{CARD}!important;border:1px solid {BDR}!important;border-radius:0 8px 8px 0!important;z-index:999999!important;}}
-[data-testid="collapsedControl"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;display:flex!important;visibility:visible!important;opacity:1!important;}}
-[data-testid="collapsedControl"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
+#MainMenu,footer,header,[data-testid="stToolbar"]{{display:none!important;}}
 .block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
 
 [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
@@ -5640,35 +5349,7 @@ div[data-baseweb="select"]>div{{background:{CARD2}!important;border:1px solid {B
 div[data-baseweb="select"] *{{color:{TEXT}!important;}}
 div[data-baseweb="popover"]{{background:{CARD2}!important;border:1px solid {BDR2}!important;border-radius:10px!important;}}
 div[data-baseweb="popover"] li:hover{{background:{BDR}!important;}}
-
-/* ── FIX FOR TEXT INPUTS ── */
-.stTextInput input, .stTextArea textarea {{
-    background:{CARD2}!important;
-    border:1px solid {BDR}!important;
-    border-radius:8px!important;
-    color:{TEXT}!important;
-    font-size:.88rem!important;
-}}
-
-/* ── FIX FOR WHITE NUMBER INPUTS ON STREAMLIT CLOUD ── */
-[data-testid="stNumberInput"] div[data-baseweb="input"] {{
-    background-color: {CARD2} !important;
-    border: 1px solid {BDR} !important;
-    border-radius: 8px !important;
-}}
-[data-testid="stNumberInput"] input {{
-    color: {TEXT} !important;
-    -webkit-text-fill-color: {TEXT} !important;
-    background-color: transparent !important;
-}}
-[data-testid="stNumberInput"] button {{
-    background-color: {CARD} !important;
-    border: 1px solid {BDR} !important;
-}}
-[data-testid="stNumberInput"] button svg {{
-    fill: {TEXT} !important;
-}}
-
+.stNumberInput input,.stTextInput input,.stTextArea textarea{{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;color:{TEXT}!important;font-size:.88rem!important;}}
 .stSlider>div>div>div>div{{background:{BLUE}!important;}}
 
 div.stButton>button{{background:{BLUE}!important;color:#fff!important;border:none!important;border-radius:10px!important;padding:14px 0!important;font-family:'Space Grotesk',sans-serif!important;font-weight:700!important;font-size:1rem!important;width:100%!important;letter-spacing:.3px!important;box-shadow:0 4px 20px {BLUE}40!important;transition:all .2s ease!important;}}
@@ -5692,6 +5373,7 @@ hr{{border-color:{BDR}!important;margin:1.4rem 0!important;}}
 .sup{{animation:sup .4s cubic-bezier(.22,1,.36,1) both;}}
 </style>
 """, unsafe_allow_html=True)
+
 
 # ─────────────────────────────────────────────
 # PLOTLY BASE LAYOUT
@@ -6162,20 +5844,14 @@ with TAB1:
             try:
                 inp = pd.DataFrame([raw])
                 
-                # 1. Safely label encode — try/except handles int classes vs str values
+                # 1. Safely label encode
                 for col_name, le in arts["enc"].items():
                     if col_name in inp.columns:
                         v = str(inp.at[0, col_name])
-                        # Try string match first, then int match, then fallback 0
-                        try:
-                            if v in le.classes_:
-                                inp.at[0, col_name] = le.transform([v])[0]
-                            elif int(v) if v.isdigit() else None in le.classes_:
-                                inp.at[0, col_name] = le.transform([int(v)])[0]
-                            else:
-                                inp.at[0, col_name] = le.transform([le.classes_[0]])[0]
-                        except Exception:
-                            inp.at[0, col_name] = 0
+                        if v in le.classes_:
+                            inp.at[0, col_name] = le.transform([v])[0]
+                        else:
+                            inp.at[0, col_name] = 0  # Fallback safety
                             
                 # 2. Enforce column order and float type
                 inp = inp[arts["cols"]].astype(float)
