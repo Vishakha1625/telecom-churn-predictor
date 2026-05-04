@@ -1963,7 +1963,10 @@ st.markdown(f"""
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 *,*::before,*::after{{box-sizing:border-box;margin:0;}}
 html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
-#MainMenu,footer,header,[data-testid="stToolbar"]{{display:none!important;}}
+#MainMenu,footer,[data-testid="stToolbar"],[data-testid="stDecoration"],[data-testid="stStatusWidget"]{{display:none!important;}}
+[data-testid="stHeader"]{{background:transparent!important;}}
+[data-testid="stSidebarCollapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
+[data-testid="collapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
 .block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
 
 [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
