@@ -1783,73 +1783,110 @@ st.set_page_config(
 )
 
 #----------------------------------------------
-# ── FORCE DARK TABLE / INPUT THEME (STREAMLIT CLOUD FIX) ──
+# ── CROSS-BROWSER DARK THEME FIX (Chrome + Edge + Streamlit Cloud) ──
 st.markdown("""
 <style>
 
-/* ── Page & app background ── */
+/* ══ 1. FORCE DARK COLOR-SCHEME — fixes Edge white-on-white bug ══ */
+:root {
+    color-scheme: dark !important;
+    -ms-color-scheme: dark !important;
+}
+*, *::before, *::after {
+    color-scheme: dark !important;
+}
+
+/* ══ 2. PAGE BACKGROUND — all browsers ══ */
 html, body, .stApp,
 [data-testid="stAppViewContainer"],
-[data-testid="stAppViewBlockContainer"] {
+[data-testid="stAppViewBlockContainer"],
+[data-testid="stVerticalBlock"],
+[data-testid="stMainBlockContainer"],
+section.main, .main {
     background-color: #0F1117 !important;
     color: #E8EDF5 !important;
 }
 
-/* ── Dataframe container ── */
+/* ══ 3. DATAFRAME / TABLE — Chrome + Edge compatible ══ */
 [data-testid="stDataFrame"],
-[data-testid="stDataFrame"] > div {
+[data-testid="stDataFrame"] > div,
+[data-testid="stDataFrame"] > div > div,
+.stDataFrame {
     background-color: #0f172a !important;
+    color: #E8EDF5 !important;
     border-radius: 10px !important;
     border: 1px solid #2A3347 !important;
+    color-scheme: dark !important;
 }
-
-/* ── Table header ── */
+/* thead */
+[data-testid="stDataFrame"] thead tr,
 [data-testid="stDataFrame"] thead tr th,
-table thead tr th {
+table thead tr th,
+thead th {
     background-color: #111827 !important;
     color: #e5e7eb !important;
     font-weight: 600 !important;
     border-bottom: 1px solid #2A3347 !important;
+    -ms-background-color: #111827 !important;
 }
-
-/* ── Table cells ── */
+/* tbody */
+[data-testid="stDataFrame"] tbody tr,
 [data-testid="stDataFrame"] tbody tr td,
-table tbody tr td {
+table tbody tr td,
+tbody td {
     background-color: #0f172a !important;
     color: #e5e7eb !important;
     border-bottom: 1px solid #1f2937 !important;
+    -ms-background-color: #0f172a !important;
 }
-
-/* ── Row hover ── */
+[data-testid="stDataFrame"] tbody tr:nth-child(even) td,
+table tbody tr:nth-child(even) td {
+    background-color: #131c31 !important;
+}
 [data-testid="stDataFrame"] tbody tr:hover td,
 table tbody tr:hover td {
     background-color: #1f2937 !important;
 }
-
-/* ── Expander dataframe ── */
+/* Generic table element fallback */
+table {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+    border-collapse: collapse !important;
+    color-scheme: dark !important;
+}
+/* Glide data editor (newer Streamlit canvas table) */
+[data-testid="stDataFrame"] [class*="dvn-scroller"],
+[data-testid="stDataFrame"] [class*="cell"],
+[data-testid="stDataFrame"] [class*="header"] {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+}
 [data-testid="stExpander"] [data-testid="stDataFrame"] {
     background-color: #0f172a !important;
 }
 
-/* ── Number input box (Streamlit Cloud selectors) ── */
+/* ══ 4. NUMBER INPUT — all browsers ══ */
 [data-testid="stNumberInput"] input,
 [data-testid="stNumberInput"] > div > div > input,
-input[type="number"] {
+input[type="number"],
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
     background-color: #1C2333 !important;
     border: 1px solid #2A3347 !important;
     border-radius: 8px !important;
     color: #E8EDF5 !important;
     font-size: .88rem !important;
     caret-color: #E8EDF5 !important;
+    -webkit-text-fill-color: #E8EDF5 !important;
 }
 input[type="number"]:focus {
     border-color: #4F8EF7 !important;
     outline: none !important;
     box-shadow: 0 0 0 2px rgba(79,142,247,0.25) !important;
 }
-
-/* ── Number input stepper buttons (+ and −) ── */
+/* Stepper +/- buttons */
 [data-testid="stNumberInput"] button,
+[data-testid="stNumberInput"] button svg,
 button[aria-label="Increment"],
 button[aria-label="Decrement"],
 button[data-testid="stNumberInputStepUp"],
@@ -1858,22 +1895,20 @@ button[data-testid="stNumberInputStepDown"] {
     border: 1px solid #374357 !important;
     border-radius: 6px !important;
     color: #E8EDF5 !important;
-}
-button[aria-label="Increment"]:hover,
-button[aria-label="Decrement"]:hover {
-    background-color: #374357 !important;
+    fill: #E8EDF5 !important;
 }
 
-/* ── Text input ── */
+/* ══ 5. TEXT INPUT ══ */
 [data-testid="stTextInput"] input,
 input[type="text"] {
     background-color: #1C2333 !important;
     border: 1px solid #2A3347 !important;
     border-radius: 8px !important;
     color: #E8EDF5 !important;
+    -webkit-text-fill-color: #E8EDF5 !important;
 }
 
-/* ── Selectbox ── */
+/* ══ 6. SELECTBOX ══ */
 div[data-baseweb="select"] > div,
 div[data-baseweb="select"] > div:focus-within {
     background-color: #1C2333 !important;
@@ -1899,22 +1934,72 @@ div[data-baseweb="popover"] [role="option"]:hover {
     background-color: #2A3347 !important;
 }
 
-/* ── All widget labels ── */
+/* ══ 7. WIDGET LABELS ══ */
 label, [data-testid="stWidgetLabel"],
 [data-testid="stWidgetLabel"] p,
 .stSelectbox label, .stNumberInput label,
 .stTextInput label, .stSlider label {
     color: #8B97B0 !important;
+    -webkit-text-fill-color: #8B97B0 !important;
 }
 
-/* ── Sidebar ── */
+/* ══ 8. SIDEBAR BACKGROUND ══ */
 [data-testid="stSidebar"],
-[data-testid="stSidebar"] > div {
+[data-testid="stSidebar"] > div,
+[data-testid="stSidebar"] section {
     background-color: #161B27 !important;
     border-right: 1px solid #2A3347 !important;
 }
 
-/* ── Expander ── */
+/* ══ 9. SIDEBAR TOGGLE BUTTONS — both <<< and >>> ══ */
+/* The collapse (<<<) button inside an open sidebar */
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stSidebarCollapseButton"] button {
+    display:      flex !important;
+    visibility:   visible !important;
+    opacity:      1 !important;
+    background-color: transparent !important;
+}
+[data-testid="stSidebarCollapseButton"] svg,
+[data-testid="stSidebarCollapseButton"] button svg {
+    fill:    #E8EDF5 !important;
+    color:   #E8EDF5 !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+/* The expand (>>>) button when sidebar is collapsed */
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"] {
+    display:      flex !important;
+    visibility:   visible !important;
+    opacity:      1 !important;
+    background-color: #161B27 !important;
+    border: 1px solid #2A3347 !important;
+    border-radius: 0 8px 8px 0 !important;
+    padding: 8px 4px !important;
+    z-index: 999999 !important;
+}
+[data-testid="stSidebarCollapsedControl"] svg,
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapsedControl"] button svg,
+[data-testid="collapsedControl"] button svg {
+    fill:    #E8EDF5 !important;
+    color:   #E8EDF5 !important;
+    opacity: 1 !important;
+    display: block !important;
+    visibility: visible !important;
+}
+[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="collapsedControl"] button {
+    display:          flex !important;
+    visibility:       visible !important;
+    opacity:          1 !important;
+    background-color: transparent !important;
+    border:           none !important;
+    color:            #E8EDF5 !important;
+}
+
+/* ══ 10. EXPANDER ══ */
 [data-testid="stExpander"] {
     background-color: #161B27 !important;
     border: 1px solid #2A3347 !important;
@@ -1922,13 +2007,22 @@ label, [data-testid="stWidgetLabel"],
 }
 details summary, details summary p {
     color: #E8EDF5 !important;
+    -webkit-text-fill-color: #E8EDF5 !important;
 }
 
-/* ── Alerts ── */
+/* ══ 11. ALERTS ══ */
 [data-testid="stSuccess"] p,
 [data-testid="stError"] p,
 [data-testid="stWarning"] p,
-[data-testid="stInfo"] p { color: #E8EDF5 !important; }
+[data-testid="stInfo"] p {
+    color: #E8EDF5 !important;
+    -webkit-text-fill-color: #E8EDF5 !important;
+}
+
+/* ══ 12. GENERAL TEXT — prevent Edge from using its own colors ══ */
+p, span, div, h1, h2, h3, h4, h5, h6, li, td, th {
+    -webkit-text-fill-color: inherit;
+}
 
 </style>
 """, unsafe_allow_html=True)
@@ -1964,9 +2058,18 @@ st.markdown(f"""
 *,*::before,*::after{{box-sizing:border-box;margin:0;}}
 html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
 #MainMenu,footer,[data-testid="stToolbar"],[data-testid="stDecoration"],[data-testid="stStatusWidget"]{{display:none!important;}}
-[data-testid="stHeader"]{{background:transparent!important;}}
-[data-testid="stSidebarCollapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
-[data-testid="collapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
+[data-testid="stHeader"]{{background:transparent!important;height:auto!important;}}
+
+/* ── Sidebar collapse/expand toggle — visible in all browsers ── */
+[data-testid="stSidebarCollapseButton"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
+[data-testid="stSidebarCollapseButton"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;}}
+[data-testid="stSidebarCollapseButton"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
+[data-testid="stSidebarCollapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;background:{CARD}!important;border:1px solid {BDR}!important;border-radius:0 8px 8px 0!important;z-index:999999!important;}}
+[data-testid="stSidebarCollapsedControl"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;display:flex!important;visibility:visible!important;opacity:1!important;}}
+[data-testid="stSidebarCollapsedControl"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
+[data-testid="collapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;background:{CARD}!important;border:1px solid {BDR}!important;border-radius:0 8px 8px 0!important;z-index:999999!important;}}
+[data-testid="collapsedControl"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;display:flex!important;visibility:visible!important;opacity:1!important;}}
+[data-testid="collapsedControl"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
 .block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
 
 [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
