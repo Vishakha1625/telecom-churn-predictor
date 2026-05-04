@@ -5326,46 +5326,127 @@ RED    = "#F43F5E"
 PURPLE = "#A855F7"
 TEAL   = "#14B8A6"
 
+# # ─────────────────────────────────────────────
+# # CSS
+# # ─────────────────────────────────────────────
+# st.markdown(f"""
+# <style>
+# @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+# *,*::before,*::after{{box-sizing:border-box;margin:0;}}
+# html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
+# #MainMenu,footer,header,[data-testid="stToolbar"]{{display:none!important;}}
+# .block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
+
+# [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
+# [data-testid="stSidebar"]>div:first-child{{padding-top:0!important;}}
+# [data-testid="stSidebarNav"]{{display:none!important;}}
+
+# .stTabs [data-baseweb="tab-list"]{{background:{CARD};border:1px solid {BDR};border-radius:12px;padding:4px;gap:2px;margin-bottom:24px;}}
+# .stTabs [data-baseweb="tab"]{{background:transparent!important;color:{MUTED}!important;border-radius:9px!important;padding:9px 24px!important;font-family:'Space Grotesk',sans-serif!important;font-size:.84rem!important;font-weight:600!important;border:none!important;transition:all .18s!important;}}
+# .stTabs [aria-selected="true"]{{background:{BLUE}!important;color:#fff!important;box-shadow:0 2px 12px {BLUE}30!important;}}
+
+# div[data-baseweb="select"]>div{{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;color:{TEXT}!important;}}
+# div[data-baseweb="select"] *{{color:{TEXT}!important;}}
+# div[data-baseweb="popover"]{{background:{CARD2}!important;border:1px solid {BDR2}!important;border-radius:10px!important;}}
+# div[data-baseweb="popover"] li:hover{{background:{BDR}!important;}}
+# .stNumberInput input,.stTextInput input,.stTextArea textarea{{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;color:{TEXT}!important;font-size:.88rem!important;}}
+# .stSlider>div>div>div>div{{background:{BLUE}!important;}}
+
+# div.stButton>button{{background:{BLUE}!important;color:#fff!important;border:none!important;border-radius:10px!important;padding:14px 0!important;font-family:'Space Grotesk',sans-serif!important;font-weight:700!important;font-size:1rem!important;width:100%!important;letter-spacing:.3px!important;box-shadow:0 4px 20px {BLUE}40!important;transition:all .2s ease!important;}}
+# div.stButton>button:hover{{background:#6BA3F9!important;box-shadow:0 8px 30px {BLUE}55!important;transform:translateY(-1px)!important;}}
+
+# [data-testid="stSuccess"]{{background:#0A1F14!important;border:1px solid {GREEN}40!important;border-radius:10px!important;}}
+# [data-testid="stError"]{{background:#1F0A11!important;border:1px solid {RED}40!important;border-radius:10px!important;}}
+# [data-testid="stWarning"]{{background:#1A1305!important;border:1px solid {AMBER}40!important;border-radius:10px!important;}}
+# [data-testid="stInfo"]{{background:#080F1F!important;border:1px solid {BLUE}40!important;border-radius:10px!important;}}
+# [data-testid="stExpander"]{{background:{CARD}!important;border:1px solid {BDR}!important;border-radius:10px!important;}}
+# details summary{{color:{TEXT}!important;}}
+
+# ::-webkit-scrollbar{{width:4px;height:4px;}}
+# ::-webkit-scrollbar-track{{background:{BG};}}
+# ::-webkit-scrollbar-thumb{{background:{BDR2};border-radius:4px;}}
+# hr{{border-color:{BDR}!important;margin:1.4rem 0!important;}}
+
+# @keyframes pdot{{0%,100%{{opacity:1;}}50%{{opacity:.2;}}}}
+# .pdot{{display:inline-block;width:7px;height:7px;border-radius:50%;background:{GREEN};animation:pdot 2s infinite;box-shadow:0 0 6px {GREEN};margin-right:6px;vertical-align:middle;}}
+# @keyframes sup{{from{{opacity:0;transform:translateY(14px);}}to{{opacity:1;transform:translateY(0);}}}}
+# .sup{{animation:sup .4s cubic-bezier(.22,1,.36,1) both;}}
+# </style>
+# """, unsafe_allow_html=True)
+
+
 # ─────────────────────────────────────────────
-# CSS
+# CSS THEME (STREAMLIT CLOUD & EDGE FIX)
 # ─────────────────────────────────────────────
 st.markdown(f"""
 <style>
+/* Force root dark mode for Edge Browser */
+:root {{ color-scheme: dark !important; -ms-color-scheme: dark !important; }}
+*, *::before, *::after {{ color-scheme: dark !important; }}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-*,*::before,*::after{{box-sizing:border-box;margin:0;}}
-html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
-#MainMenu,footer,header,[data-testid="stToolbar"]{{display:none!important;}}
-.block-container{{padding:0 2rem 5rem!important;max-width:1420px!important;}}
+html,body,.stApp {{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
+#MainMenu,footer,[data-testid="stToolbar"],[data-testid="stDecoration"],[data-testid="stStatusWidget"] {{display:none!important;}}
+[data-testid="stHeader"] {{background:transparent!important;height:auto!important;}}
+.block-container {{padding:0 2rem 5rem!important;max-width:1420px!important;}}
 
-[data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
-[data-testid="stSidebar"]>div:first-child{{padding-top:0!important;}}
-[data-testid="stSidebarNav"]{{display:none!important;}}
+/* Sidebar */
+[data-testid="stSidebar"] {{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
+[data-testid="stSidebar"]>div:first-child {{padding-top:0!important;}}
+[data-testid="stSidebarNav"] {{display:none!important;}}
 
-.stTabs [data-baseweb="tab-list"]{{background:{CARD};border:1px solid {BDR};border-radius:12px;padding:4px;gap:2px;margin-bottom:24px;}}
-.stTabs [data-baseweb="tab"]{{background:transparent!important;color:{MUTED}!important;border-radius:9px!important;padding:9px 24px!important;font-family:'Space Grotesk',sans-serif!important;font-size:.84rem!important;font-weight:600!important;border:none!important;transition:all .18s!important;}}
-.stTabs [aria-selected="true"]{{background:{BLUE}!important;color:#fff!important;box-shadow:0 2px 12px {BLUE}30!important;}}
+/* Sidebar Toggle Buttons */
+[data-testid="stSidebarCollapseButton"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
+[data-testid="stSidebarCollapseButton"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;}}
+[data-testid="stSidebarCollapseButton"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
+[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"]{{display:flex!important;visibility:visible!important;opacity:1!important;background:{CARD}!important;border:1px solid {BDR}!important;border-radius:0 8px 8px 0!important;z-index:999999!important;}}
+[data-testid="stSidebarCollapsedControl"] button, [data-testid="collapsedControl"] button{{background:transparent!important;border:none!important;color:{TEXT}!important;display:flex!important;visibility:visible!important;opacity:1!important;}}
+[data-testid="stSidebarCollapsedControl"] svg, [data-testid="collapsedControl"] svg{{fill:{TEXT}!important;color:{TEXT}!important;opacity:1!important;display:block!important;visibility:visible!important;width:1.2rem!important;height:1.2rem!important;}}
 
-div[data-baseweb="select"]>div{{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;color:{TEXT}!important;}}
-div[data-baseweb="select"] *{{color:{TEXT}!important;}}
-div[data-baseweb="popover"]{{background:{CARD2}!important;border:1px solid {BDR2}!important;border-radius:10px!important;}}
-div[data-baseweb="popover"] li:hover{{background:{BDR}!important;}}
-.stNumberInput input,.stTextInput input,.stTextArea textarea{{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;color:{TEXT}!important;font-size:.88rem!important;}}
-.stSlider>div>div>div>div{{background:{BLUE}!important;}}
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {{background:{CARD};border:1px solid {BDR};border-radius:12px;padding:4px;gap:2px;margin-bottom:24px;}}
+.stTabs [data-baseweb="tab"] {{background:transparent!important;color:{MUTED}!important;border-radius:9px!important;padding:9px 24px!important;font-family:'Space Grotesk',sans-serif!important;font-size:.84rem!important;font-weight:600!important;border:none!important;transition:all .18s!important;}}
+.stTabs [aria-selected="true"] {{background:{BLUE}!important;color:#fff!important;box-shadow:0 2px 12px {BLUE}30!important;}}
 
-div.stButton>button{{background:{BLUE}!important;color:#fff!important;border:none!important;border-radius:10px!important;padding:14px 0!important;font-family:'Space Grotesk',sans-serif!important;font-weight:700!important;font-size:1rem!important;width:100%!important;letter-spacing:.3px!important;box-shadow:0 4px 20px {BLUE}40!important;transition:all .2s ease!important;}}
-div.stButton>button:hover{{background:#6BA3F9!important;box-shadow:0 8px 30px {BLUE}55!important;transform:translateY(-1px)!important;}}
+/* Inputs (General) */
+label, [data-testid="stWidgetLabel"], [data-testid="stWidgetLabel"] p {{color: {SUB} !important; -webkit-text-fill-color: {SUB} !important;}}
+div[data-baseweb="select"]>div {{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;}}
+div[data-baseweb="select"] span, div[data-baseweb="select"] p {{color:{TEXT}!important;}}
+div[data-baseweb="popover"], div[data-baseweb="popover"] > div {{background:{CARD2}!important;border:1px solid {BDR2}!important;border-radius:10px!important;}}
+div[data-baseweb="popover"] li {{background:{CARD2}!important;color:{TEXT}!important;}}
+div[data-baseweb="popover"] li:hover {{background:{BDR}!important;}}
+.stTextInput input, .stTextArea textarea {{background:{CARD2}!important;border:1px solid {BDR}!important;border-radius:8px!important;color:{TEXT}!important; -webkit-text-fill-color:{TEXT}!important; font-size:.88rem!important;}}
 
-[data-testid="stSuccess"]{{background:#0A1F14!important;border:1px solid {GREEN}40!important;border-radius:10px!important;}}
-[data-testid="stError"]{{background:#1F0A11!important;border:1px solid {RED}40!important;border-radius:10px!important;}}
-[data-testid="stWarning"]{{background:#1A1305!important;border:1px solid {AMBER}40!important;border-radius:10px!important;}}
-[data-testid="stInfo"]{{background:#080F1F!important;border:1px solid {BLUE}40!important;border-radius:10px!important;}}
-[data-testid="stExpander"]{{background:{CARD}!important;border:1px solid {BDR}!important;border-radius:10px!important;}}
-details summary{{color:{TEXT}!important;}}
+/* ── STREAMLIT CLOUD NUMBER INPUT FIX (Fixes White Boxes) ── */
+[data-testid="stNumberInput"] > div > div {{background-color: {CARD2} !important; border: 1px solid {BDR} !important; border-radius: 8px !important;}}
+[data-testid="stNumberInput"] input {{color: {TEXT} !important; -webkit-text-fill-color: {TEXT} !important; background-color: transparent !important;}}
+[data-testid="stNumberInput"] button {{background-color: {CARD} !important; border: 1px solid {BDR} !important;}}
+[data-testid="stNumberInput"] button svg {{fill: {TEXT} !important;}}
 
-::-webkit-scrollbar{{width:4px;height:4px;}}
-::-webkit-scrollbar-track{{background:{BG};}}
-::-webkit-scrollbar-thumb{{background:{BDR2};border-radius:4px;}}
-hr{{border-color:{BDR}!important;margin:1.4rem 0!important;}}
+.stSlider>div>div>div>div {{background:{BLUE}!important;}}
+
+/* Buttons */
+div.stButton>button {{background:{BLUE}!important;color:#fff!important;border:none!important;border-radius:10px!important;padding:14px 0!important;font-family:'Space Grotesk',sans-serif!important;font-weight:700!important;font-size:1rem!important;width:100%!important;letter-spacing:.3px!important;box-shadow:0 4px 20px {BLUE}40!important;transition:all .2s ease!important;}}
+div.stButton>button:hover {{background:#6BA3F9!important;box-shadow:0 8px 30px {BLUE}55!important;transform:translateY(-1px)!important;}}
+
+/* ── DATAFRAME FIX (Fixes White Tables) ── */
+[data-testid="stDataFrame"], [data-testid="stDataFrame"] > div {{ background-color: #0f172a !important; border-radius: 10px !important; border: 1px solid #2A3347 !important; }}
+[data-testid="stDataFrame"] table {{ background-color: #0f172a !important; color: #e5e7eb !important; }}
+[data-testid="stDataFrame"] thead th {{ background-color: #111827 !important; color: #e5e7eb !important; border-bottom: 1px solid #2A3347 !important; }}
+[data-testid="stDataFrame"] tbody td {{ background-color: #0f172a !important; color: #e5e7eb !important; border-bottom: 1px solid #1f2937 !important; }}
+
+/* Misc */
+[data-testid="stSuccess"] {{background:#0A1F14!important;border:1px solid {GREEN}40!important;border-radius:10px!important;}}
+[data-testid="stError"] {{background:#1F0A11!important;border:1px solid {RED}40!important;border-radius:10px!important;}}
+[data-testid="stWarning"] {{background:#1A1305!important;border:1px solid {AMBER}40!important;border-radius:10px!important;}}
+[data-testid="stInfo"] {{background:#080F1F!important;border:1px solid {BLUE}40!important;border-radius:10px!important;}}
+[data-testid="stExpander"] {{background:{CARD}!important;border:1px solid {BDR}!important;border-radius:10px!important;}}
+details summary {{color:{TEXT}!important; -webkit-text-fill-color: {TEXT} !important;}}
+
+::-webkit-scrollbar {{width:4px;height:4px;}}
+::-webkit-scrollbar-track {{background:{BG};}}
+::-webkit-scrollbar-thumb {{background:{BDR2};border-radius:4px;}}
+hr {{border-color:{BDR}!important;margin:1.4rem 0!important;}}
 
 @keyframes pdot{{0%,100%{{opacity:1;}}50%{{opacity:.2;}}}}
 .pdot{{display:inline-block;width:7px;height:7px;border-radius:50%;background:{GREEN};animation:pdot 2s infinite;box-shadow:0 0 6px {GREEN};margin-right:6px;vertical-align:middle;}}
@@ -5373,7 +5454,6 @@ hr{{border-color:{BDR}!important;margin:1.4rem 0!important;}}
 .sup{{animation:sup .4s cubic-bezier(.22,1,.36,1) both;}}
 </style>
 """, unsafe_allow_html=True)
-
 
 # ─────────────────────────────────────────────
 # PLOTLY BASE LAYOUT
