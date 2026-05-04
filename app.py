@@ -5339,28 +5339,22 @@ button[aria-label="Decrement"] {
     -webkit-text-fill-color: #E8EDF5 !important;
 }
 
-/* Sidebar toggle >>> (collapsed) and <<< (expanded) — make SVG visible */
+/* ══ SIDEBAR TOGGLE — covers ALL Streamlit versions (1.28 – 1.45+) ══ */
+
+/* When sidebar is COLLAPSED — the >>> expand button */
 [data-testid="stSidebarCollapsedControl"],
 [data-testid="collapsedControl"] {
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
-    background-color: #161B27 !important;
+    background-color: #1C2333 !important;
     border: 1px solid #2A3347 !important;
     border-radius: 0 8px 8px 0 !important;
     z-index: 999999 !important;
-}
-[data-testid="stSidebarCollapsedControl"] svg,
-[data-testid="collapsedControl"] svg,
-[data-testid="stSidebarCollapsedControl"] button svg,
-[data-testid="collapsedControl"] button svg {
-    fill: #E8EDF5 !important;
-    color: #E8EDF5 !important;
-    opacity: 1 !important;
-    display: block !important;
-    visibility: visible !important;
-    width: 1.1rem !important;
-    height: 1.1rem !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 0 !important;
+    padding: 10px 6px !important;
 }
 [data-testid="stSidebarCollapsedControl"] button,
 [data-testid="collapsedControl"] button {
@@ -5370,23 +5364,68 @@ button[aria-label="Decrement"] {
     background-color: transparent !important;
     border: none !important;
     color: #E8EDF5 !important;
+    padding: 0 !important;
 }
+[data-testid="stSidebarCollapsedControl"] svg,
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapsedControl"] button svg,
+[data-testid="collapsedControl"] button svg {
+    fill: #E8EDF5 !important;
+    color: #E8EDF5 !important;
+    stroke: #E8EDF5 !important;
+    opacity: 1 !important;
+    display: block !important;
+    visibility: visible !important;
+    width: 1.2rem !important;
+    height: 1.2rem !important;
+}
+
+/* When sidebar is OPEN — the <<< collapse button */
 [data-testid="stSidebarCollapseButton"],
 [data-testid="stSidebarCollapseButton"] button {
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
     background-color: transparent !important;
+    border: none !important;
 }
 [data-testid="stSidebarCollapseButton"] svg,
 [data-testid="stSidebarCollapseButton"] button svg {
     fill: #E8EDF5 !important;
     color: #E8EDF5 !important;
+    stroke: #E8EDF5 !important;
     opacity: 1 !important;
     display: block !important;
     visibility: visible !important;
-    width: 1.1rem !important;
-    height: 1.1rem !important;
+    width: 1.2rem !important;
+    height: 1.2rem !important;
+}
+
+/* Generic header button fallback — covers any version */
+[data-testid="stHeader"] button,
+[data-testid="stHeader"] button svg {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    fill: #E8EDF5 !important;
+    color: #E8EDF5 !important;
+    stroke: #E8EDF5 !important;
+}
+button[kind="header"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: #1C2333 !important;
+    border: 1px solid #2A3347 !important;
+    border-radius: 8px !important;
+    color: #E8EDF5 !important;
+}
+button[kind="header"] svg {
+    fill: #E8EDF5 !important;
+    stroke: #E8EDF5 !important;
+    color: #E8EDF5 !important;
+    width: 1.2rem !important;
+    height: 1.2rem !important;
 }
 </style>
 """, unsafe_allow_html=True)
