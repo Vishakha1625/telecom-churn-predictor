@@ -5544,9 +5544,7 @@ st.markdown(f"""
 *,*::before,*::after{{box-sizing:border-box;margin:0;}}
 html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
 #MainMenu,footer,[data-testid="stToolbar"],[data-testid="stDecoration"],[data-testid="stStatusWidget"]{{display:none!important;}}
-[data-testid="stHeader"]{{background:transparent!important;min-height:3.75rem!important;height:3.75rem!important;display:flex!important;align-items:center!important;visibility:visible!important;opacity:1!important;}}
-[data-testid="stHeader"] button,[data-testid="stHeader"] button *{{display:flex!important;visibility:visible!important;opacity:1!important;}}
-[data-testid="stHeader"] svg{{fill:{TEXT}!important;display:block!important;visibility:visible!important;opacity:1!important;}}
+[data-testid="stHeader"]{{background:transparent!important;height:auto!important;}}
 
 /* ── Sidebar collapse/expand toggle — visible in all browsers ── */
 [data-testid="stSidebarCollapseButton"]{{display:flex!important;visibility:visible!important;opacity:1!important;}}
@@ -5562,9 +5560,6 @@ html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'
 
 [data-testid="stSidebar"]{{background:{CARD}!important;border-right:1px solid {BDR}!important;}}
 [data-testid="stSidebar"]>div:first-child{{padding-top:0!important;}}
-[data-testid="stSidebar"] *{{color:{TEXT}!important;-webkit-text-fill-color:{TEXT}!important;}}
-[data-testid="stSidebar"] div,[data-testid="stSidebar"] p,[data-testid="stSidebar"] span,[data-testid="stSidebar"] label{{color:{TEXT}!important;-webkit-text-fill-color:{TEXT}!important;background-color:transparent;}}
-[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] *{{color:{TEXT}!important;-webkit-text-fill-color:{TEXT}!important;}}
 [data-testid="stSidebarNav"]{{display:none!important;}}
 
 .stTabs [data-baseweb="tab-list"]{{background:{CARD};border:1px solid {BDR};border-radius:12px;padding:4px;gap:2px;margin-bottom:24px;}}
@@ -5624,57 +5619,6 @@ def plotly_layout(title="", height=360):
         ),
         colorway=[BLUE, CYAN, GREEN, AMBER, RED, PURPLE, TEAL],
     )
-
-
-# ─────────────────────────────────────────────
-# HTML TABLE HELPER — replaces st.dataframe()
-# Works on Chrome, Edge, Firefox, Streamlit Cloud
-# because it renders plain HTML, not a canvas.
-# ─────────────────────────────────────────────
-def show_df(dataframe, hide_index=True):
-    """Render a DataFrame as a styled dark HTML table — no canvas, works everywhere."""
-    _TH = (
-        f"background:{CARD2};color:{TEXT};padding:9px 14px;text-align:left;"
-        f"font-size:.8rem;font-weight:700;border-bottom:2px solid {BDR2};"
-        f"white-space:nowrap;font-family:'Space Grotesk',sans-serif;"
-        f"letter-spacing:.3px;"
-    )
-    _TD = (
-        f"color:{TEXT};padding:8px 14px;font-size:.8rem;"
-        f"border-bottom:1px solid {BDR};white-space:nowrap;"
-        f"-webkit-text-fill-color:{TEXT};"
-    )
-    _TD_ALT = (
-        f"background:{CARD2};color:{TEXT};padding:8px 14px;font-size:.8rem;"
-        f"border-bottom:1px solid {BDR};white-space:nowrap;"
-        f"-webkit-text-fill-color:{TEXT};"
-    )
-    html = (
-        f'<div style="overflow-x:auto;border-radius:10px;'
-        f'border:1px solid {BDR};background:{CARD};">'
-        f'<table style="width:100%;border-collapse:collapse;background:{CARD};">'
-        f'<thead><tr>'
-    )
-    if not hide_index:
-        html += f'<th style="{_TH}"></th>'
-    for col in dataframe.columns:
-        html += f'<th style="{_TH}">{col}</th>'
-    html += '</tr></thead><tbody>'
-    for i, (idx, row) in enumerate(dataframe.iterrows()):
-        td_style = _TD_ALT if i % 2 == 0 else _TD
-        html += f'<tr style="background:{""+CARD2 if i%2==0 else CARD};">'
-        if not hide_index:
-            html += f'<td style="{td_style};color:{SUB};">{idx}</td>'
-        for val in row:
-            # Format numbers nicely
-            if isinstance(val, float):
-                cell = f"{val:.4f}" if val < 1 else f"{val:.2f}"
-            else:
-                cell = str(val)
-            html += f'<td style="{td_style}">{cell}</td>'
-        html += '</tr>'
-    html += '</tbody></table></div>'
-    st.markdown(html, unsafe_allow_html=True)
 
 
 # ─────────────────────────────────────────────
@@ -6974,8 +6918,9 @@ with TAB2:
             flt = st.text_input("Filter by Churn (Yes / No / blank = all):", "")
             vdf = (df[df["Churn"].str.contains(flt, case=False, na=False)]
                    if flt else df)
-            show_df(
+            st.dataframe(
                 vdf.drop(columns=["ChurnBin", "TenureGroup"], errors="ignore").head(300),
+                use_container_width=True,
             )
             st.caption(f"Showing {min(300, len(vdf))} of {len(vdf):,} rows")
 
@@ -7021,7 +6966,7 @@ with TAB3:
         "Tuned AUC-ROC":   [0.8434, 0.8397, 0.8382],
         "Speed":           ["Medium", "Slow", "Fast"],
     })
-    show_df(perf_df, hide_index=True)
+    st.dataframe(perf_df, use_container_width=True, hide_index=True)
 
     # Metric bar charts
     md("<br>")
@@ -7163,7 +7108,7 @@ with TAB3:
             "F1-Score":  [0.84, 0.63, 0.73, 0.78],
             "Support":   [1035, 374, 1409, 1409],
         })
-        show_df(report_data, hide_index=True)
+        st.dataframe(report_data, use_container_width=True, hide_index=True)
 
     with cr2:
         sec_hdr("⚙️", "Best Hyperparameters",
