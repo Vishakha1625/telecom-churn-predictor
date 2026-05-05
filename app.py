@@ -5351,7 +5351,6 @@ footer{{display:none!important;}}
 [data-testid="stHeader"]{{
     background:transparent!important;
     border-bottom:none!important;
-    height: 0px !important;
     overflow: visible !important;
     z-index: 999998 !important;
 }}
