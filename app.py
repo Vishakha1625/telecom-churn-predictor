@@ -5331,7 +5331,7 @@ TEAL   = "#14B8A6"
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-*,*::before,*::after{{box-sizing:border-box;margin:0;}}
+*,*::before,*::after{{box-sizing:border-box;}}
 html,body,.stApp{{background:{BG}!important;color:{TEXT}!important;font-family:'Inter',sans-serif!important;}}
 
 /* ── Hide Streamlit chrome WITHOUT touching header or sidebar controls ── */
