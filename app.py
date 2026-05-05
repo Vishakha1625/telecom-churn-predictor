@@ -5341,10 +5341,19 @@ footer{{display:none!important;}}
 [data-testid="stDecoration"]{{display:none!important;}}
 [data-testid="stStatusWidget"]{{display:none!important;}}
 
+/* ── Header: keep it but make it transparent so toggle buttons inside are accessible ── 
+[data-testid="stHeader"]{{
+    background:transparent!important;
+    border-bottom:none!important; 
+}}*/
+
 /* ── Header: keep it but make it transparent so toggle buttons inside are accessible ── */
 [data-testid="stHeader"]{{
     background:transparent!important;
     border-bottom:none!important;
+    height: 0px !important;
+    overflow: visible !important;
+    z-index: 999998 !important;
 }}
 
 /* ── Block container ── */
@@ -5359,7 +5368,7 @@ footer{{display:none!important;}}
 
 /* ══ SIDEBAR TOGGLE BUTTONS — always visible with blue background ══ */
 
-/* >>> expand button (when sidebar is collapsed) */
+/* >>> expand button (when sidebar is collapsed) 
 [data-testid="stSidebarCollapsedControl"]{{
     display:flex!important;
     visibility:visible!important;
@@ -5367,6 +5376,16 @@ footer{{display:none!important;}}
     position:fixed!important;
     left:0!important;
     top:45%!important;
+    z-index:9999999!important; */
+    
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"]{{
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    position:fixed!important;
+    left:15px!important;
+    top:15px!important;
     z-index:9999999!important;
     background:{BLUE}!important;
     border-radius:0 8px 8px 0!important;
