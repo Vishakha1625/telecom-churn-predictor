@@ -17,3 +17,6 @@ gatherUsageStats         = false
 
 [runner]
 magicEnabled             = false
+
+[client]
+toolbarMode = "minimal"
