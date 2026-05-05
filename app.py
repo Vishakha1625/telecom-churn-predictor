@@ -5381,22 +5381,8 @@ footer{{display:none!important;}}
 [data-testid="collapsedControl"]{{
     display:flex!important;
     visibility:visible!important;
-    opacity:1!important;
-    position:fixed!important;
-    left:15px!important;
-    top:15px!important;
-    z-index:9999999!important;
-    background:{BLUE}!important;
-    border-radius:0 8px 8px 0!important;
-    border:none!important;
-    padding:10px 6px!important;
-    width:28px!important;
-    min-height:44px!important;
-    align-items:center!important;
-    justify-content:center!important;
-    box-shadow:2px 2px 12px rgba(0,0,0,0.6)!important;
-    cursor:pointer!important;
-}}
+    opacity:1!important;}}
+    
 [data-testid="stSidebarCollapsedControl"] button{{
     display:flex!important;
     visibility:visible!important;
