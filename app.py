@@ -5258,76 +5258,6 @@ from sklearn.preprocessing import LabelEncoder
 
 warnings.filterwarnings("ignore")
 
-import streamlit as st
-
-# 🔥 FORCE DARK UI ALWAYS (ignore system theme)
-st.markdown("""
-<style>
-
-/* ===== FORCE GLOBAL DARK BACKGROUND ===== */
-html, body, [data-testid="stAppViewContainer"], .main {
-    background-color: #0F1117 !important;
-    color: #E8EDF5 !important;
-}
-
-/* ===== SIDEBAR FIX ===== */
-section[data-testid="stSidebar"] {
-    background-color: #161B27 !important;
-}
-
-/* ===== TEXT COLOR FIX ===== */
-h1, h2, h3, h4, h5, h6, p, span, label, div {
-    color: #E8EDF5 !important;
-}
-
-/* ===== TABLE FIX (MAIN ISSUE) ===== */
-thead tr th {
-    background-color: #1f2937 !important;
-    color: white !important;
-}
-
-tbody tr td {
-    background-color: #111827 !important;
-    color: #E8EDF5 !important;
-}
-
-table {
-    border-radius: 10px !important;
-    overflow: hidden !important;
-}
-
-/* ===== DATAFRAME FIX ===== */
-[data-testid="stDataFrame"] {
-    background-color: #111827 !important;
-}
-
-/* ===== BUTTON FIX (PREDICTION PAGE ISSUE) ===== */
-.stButton > button {
-    background-color: #4F8EF7 !important;
-    color: white !important;
-    border-radius: 8px !important;
-    border: none !important;
-}
-
-.stButton > button:hover {
-    background-color: #3b6fd8 !important;
-    color: white !important;
-}
-
-/* ===== INPUT BOX FIX ===== */
-.stTextInput input, .stNumberInput input {
-    background-color: #111827 !important;
-    color: white !important;
-}
-
-/* ===== SELECTBOX FIX ===== */
-.stSelectbox div {
-    background-color: #111827 !important;
-    color: white !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
 
 # PAGE CONFIG — must be the VERY FIRST st. call
 st.set_page_config(
@@ -5338,7 +5268,41 @@ st.set_page_config(
 )
 
 #----------------------------------------------
+# ── FORCE DARK TABLE THEME (STREAMLIT CLOUD FIX) ──
+st.markdown("""
+<style>
 
+/* dataframe container */
+[data-testid="stDataFrame"] {
+    background-color: #0f172a;
+    border-radius: 10px;
+}
+
+/* table header */
+[data-testid="stDataFrame"] thead tr th {
+    background-color: #111827 !important;
+    color: #e5e7eb !important;
+    font-weight: 600;
+}
+
+/* table cells */
+[data-testid="stDataFrame"] tbody tr td {
+    background-color: #0f172a !important;
+    color: #e5e7eb !important;
+}
+
+/* row hover */
+[data-testid="stDataFrame"] tbody tr:hover td {
+    background-color: #1f2937 !important;
+}
+
+/* expander dataframe fix */
+[data-testid="stExpander"] [data-testid="stDataFrame"] {
+    background-color: #0f172a;
+}
+
+</style>
+""", unsafe_allow_html=True)
 #----------------------------------------------
 
 # ─────────────────────────────────────────────
@@ -5596,6 +5560,24 @@ body[data-theme="light"] td{{
 
 body[data-theme="light"] label{{
     color:#8B97B0 !important;
+}}
+
+/* ===== FINAL FIX : SYSTEM LIGHT MODE ===== */
+
+/* force dark text contrast inside dataframe */
+html[data-theme="light"] [data-testid="stDataFrame"] * {{
+    color: #e5e7eb !important;
+}}
+
+/* ensure dataframe background never becomes white */
+html[data-theme="light"] [data-testid="stDataFrame"],
+html[data-theme="light"] table {{
+    background: #0f172a !important;
+}}
+
+/* prediction page button text fix */
+html[data-theme="light"] .stButton > button {{
+    color: #ffffff !important;
 }}
 /* ══ MISC ══ */
 ::-webkit-scrollbar{{width:4px;height:4px;}}
